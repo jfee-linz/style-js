@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 
 /**
  * Basic React Component for testing react linting rules

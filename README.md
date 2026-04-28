@@ -7,9 +7,9 @@ NPM configuration for base typescript projects
 
 Includes:
 
-- Prettier
-- Eslint
-- Typescript
+- [oxlint](https://oxc.rs/docs/guide/usage/linter) — fast JavaScript/TypeScript linter
+- [oxfmt](https://oxc.rs/docs/guide/usage/formatter) — fast JavaScript/TypeScript formatter
+- TypeScript
 
 And configuration for saneish defaults, which can be extended
 
@@ -38,60 +38,60 @@ export class FooBar {
 
 ### Usage VS Code
 
-1. Install `eslint` using the extensions menu
-2. Add the following to your settings.json
+Install the [oxc](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) extension for inline linting.
+
+Install the [oxfmt](https://marketplace.visualstudio.com/items?itemName=oxc.oxfmt-vscode) extension for formatting on save, then add to your `settings.json`:
 
 ```json
-"editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-},
-"eslint.validate": ["javascript"],
+"editor.defaultFormatter": "oxc.oxfmt-vscode",
+"editor.formatOnSave": true
 ```
 
 ### Usage with IntelliJ
 
-IntelliJ has ESLint support by default,
-
-1. Open the settings in Languages & Frameworks > JavaScript > Code Quality Tools > ESLint
-2. Check Automatic ESLint Configuration
+IntelliJ has an Oxc plugin supporting oxfmt and oxlint: https://plugins.jetbrains.com/plugin/27061-oxc
 
 ## Project Usage
 
-1. Install LINZ Style
+1. Install `@linzjs/style`:
 
 ```bash
 npm install @linzjs/style
 ```
 
-2. Applying eslint config
-There are two ways to apply the config
+2. Install the config files:
+   There are two ways to apply the config
 
 **Either create the base configuration files**
+
 ```bash
 # If on windows run `node ./node_modules/@linzjs/style/build/src/install.js`
+# - oxfmt.config.ts
+# - oxlint.config.ts
 # - tsconfig.json
-# - .eslintrc.cjs
-# - .prettierrc.cjs
 npx linz-style-install
 ```
 
-**Or extend your existing `eslintrc.js` config**   
+**Or extend your existing `oxlint.config.ts` config**
 
-Example extending the `.eslintrc.js` file in your project
-```js
-module.exports = {
-  extends: ["./node_modules/@linzjs/style/.eslintrc.cjs"],
+Example extending the `oxlint.config.ts` file in your project
 
+```typescript
+import base from '@linzjs/style/oxlint.config-react';
+import { defineConfig } from 'oxlint';
+
+export default defineConfig({
+  extends: [base],
   overrides: [
     {
       /** Overrides for typescript */
-      files: ["**/*.ts", "**/*.tsx"],      
+      files: ['**/*.ts', '**/*.tsx'],
       rules: {
-        "@typescript-eslint/super-crazy-hook-rule": "error",
+        'react/super-crazy-hook-rule': 'error',
       },
     },
-  ]
-}
+  ],
+});
 ```
 
 3. Apply the formatting/linting to all source code
@@ -100,7 +100,10 @@ module.exports = {
 npx eslint .
 ```
 
-
 ## Migration from 3.x to 4.x
 
 See [Migration Docs](./migration.4.md)
+
+## Migration from 5.x to 6.x
+
+See [Migration Docs](./migration.6.md)
