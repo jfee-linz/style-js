@@ -56,7 +56,7 @@ IntelliJ has an Oxc plugin supporting oxfmt and oxlint: https://plugins.jetbrain
 1. Install `@linzjs/style`:
 
 ```bash
-npm install @linzjs/style
+npm install --save-dev @linzjs/style oxfmt oxlint oxlint-tsgolint
 ```
 
 2. Install the config files:

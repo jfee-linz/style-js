@@ -17,7 +17,7 @@ rm .eslintrc.cjs .eslintrc-react.cjs .prettierrc.cjs tsconfig.json
 ### 2. Update @linzjs/style
 
 ```bash
-npm install --save-dev @linzjs/style@^6.0.0 oxfmt oxlint
+npm install --save-dev @linzjs/style@^6.0.0 oxfmt oxlint oxlint-tsgolint
 ```
 
 ### 5. Update CI / scripts
