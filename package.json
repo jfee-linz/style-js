@@ -8,6 +8,7 @@
   },
   "files": [
     "build",
+    "!build/**/__test__",
     "config",
     "linz-style-install.mjs",
     "oxfmt.config.ts",
