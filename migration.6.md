@@ -27,7 +27,7 @@ Replace commands in package.json:
 ```json
 "scripts": {
   "lint": "oxlint . && oxfmt --check .",
-  "format": "oxlint --fix && oxfmt ."
+  "format": "oxlint --fix . && oxfmt ."
 }
 ```
 
