@@ -11,7 +11,7 @@ npm uninstall eslint prettier @typescript-eslint/eslint-plugin @typescript-eslin
   eslint-config-prettier eslint-plugin-prettier eslint-plugin-react \
   eslint-plugin-react-hooks eslint-plugin-simple-import-sort
 
-rm .eslintrc.cjs .eslintrc-react.cjs .prettierrc.cjs tsconfig.json
+rm .eslintrc.cjs .eslintrc-react.cjs .prettierrc.cjs
 ```
 
 ### 2. Update @linzjs/style
@@ -19,6 +19,22 @@ rm .eslintrc.cjs .eslintrc-react.cjs .prettierrc.cjs tsconfig.json
 ```bash
 npm install --save-dev @linzjs/style@^6.0.0 oxfmt oxlint oxlint-tsgolint
 ```
+
+### 3. Migrate tsconfig.json
+
+Update your `tsconfig.json` to extend `@linzjs/style/tsconfig.base.json` and keep only project-specific overrides:
+
+```json
+{
+  "extends": "@linzjs/style/tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "build"
+  },
+  "include": ["src"]
+}
+```
+
+Remove any compiler options already provided by `tsconfig.base.json` (strict mode, module resolution, target, lib, etc.). Retain only settings specific to your project such as `outDir`, `rootDir`, `paths`, or `include`/`exclude`.
 
 ### 5. Update CI / scripts
 
@@ -39,8 +55,6 @@ Replace commands in package.json:
 | `prettier --write .` | `oxfmt .`         |
 
 ### 6. Check for unexpected changes
-
-- update tsconfig to include any customizations like "paths"
 
 - stage changes and then run `npm run format`
 
