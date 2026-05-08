@@ -2,46 +2,57 @@ import { defineConfig } from 'oxlint';
 
 export default defineConfig({
   options: {
-    reportUnusedDisableDirectives: 'warn',
+    reportUnusedDisableDirectives: 'error',
     typeAware: true,
     typeCheck: true,
   },
 
-  plugins: ['eslint', 'import', 'jsx-a11y', 'node', 'typescript'],
+  plugins: ['eslint', 'typescript', 'jsx-a11y'],
 
-  /** Default rules for Javascript, Typescript & Tests */
   rules: {
-    // Use const/let
-    'eslint/no-var': 'error',
-
-    /**
-     *  Force `===` but allow `== null`
-     *  to prevent `x === undefined || x === null`
-     */
-    'eslint/eqeqeq': ['error', 'always', { null: 'ignore' }],
-
-    // https://eslint.org/blog/2022/07/interesting-bugs-caught-by-no-constant-binary-expression/
-    'eslint/no-constant-binary-expression': 'error',
-
-    // import sorting handled by oxfmt, see oxfmt.config.ts
-    'import/no-cycle': ['error', { maxDepth: 8 }],
-
-    // Disallow comma operators
-    'eslint/no-sequences': 'error',
-
-    // Allow unused with underscore prefix
-    'typescript/no-unused-vars': ['error', 'always', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    curly: 'error',
+    eqeqeq: ['error', 'always', { null: 'ignore' }],
+    'no-constant-binary-expression': 'error',
+    'no-sequences': 'error',
+    'no-unsafe-optional-chaining': 'error',
+    'no-unused-expressions': 'off',
+    'no-useless-rename': 'off',
+    'no-var': 'error',
   },
 
   overrides: [
     {
-      /**
-       * Overrides for typescript tests
-       * All rules in the Typescript overrides are also applied
-       * They can be overwriten here
-       */
+      files: ['**/*.mts', '**/*.ts', '**/*.tsx'],
+      rules: {
+        'react/only-export-components': 'error',
+        'typescript/ban-ts-comment': 'error',
+        'typescript/explicit-function-return-type': 'off',
+        'typescript/no-misused-promises': 'error',
+        'typescript/no-namespace': 'error',
+        'typescript/no-unnecessary-type-assertion': 'error',
+        'typescript/no-unsafe-argument': 'error',
+        'typescript/no-unsafe-assignment': 'error',
+        'typescript/no-unsafe-call': 'error',
+        'typescript/no-unsafe-member-access': 'error',
+        'typescript/no-unsafe-return': 'error',
+        'typescript/no-unused-vars': [
+          'warn',
+          {
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_',
+            caughtErrorsIgnorePattern: '^_',
+          },
+        ],
+        'typescript/prefer-promise-reject-errors': 'error',
+        'typescript/require-await': 'error',
+        'typescript/restrict-plus-operands': 'error',
+      },
+    },
+
+    {
       files: ['**/*.test.ts', '**/*.test.tsx', '**/*.stories.*'],
       rules: {
+        'no-console': 'off',
         'typescript/no-non-null-assertion': 'off',
       },
     },

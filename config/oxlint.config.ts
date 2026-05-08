@@ -5,8 +5,27 @@ import { defineConfig } from "oxlint";
 
 export default defineConfig({
   extends: [base],
-  // categories: {
-  //   correctness: 'error',
-  //   perf: 'error',
-  // },
+  env: {
+    browser: true,
+    es2023: true,
+    // "node": true
+  },
+  overrides: [
+    {
+      files: ["**/*.mts", "**/*.ts", "**/*.tsx"],
+      jsPlugins: [
+        // requires npm install
+        // "eslint-plugin-react-hooks"
+      ],
+    },
+    {
+      files: ["**/*.test.ts", "**/*.test.tsx", "**/*.stories.*"],
+      plugins: ["vitest"],
+      jsPlugins: [
+        // requires npm install
+        // 'eslint-plugin-testing-library',
+        // 'eslint-plugin-storybook'],
+      ],
+    },
+  ],
 });

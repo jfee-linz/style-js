@@ -15,36 +15,15 @@ And configuration for saneish defaults, which can be extended
 
 Most of these are the raw defaults/recommended settings from typescript, eslint and prettier.
 
-```typescript
-export class FooBar {
-  get foo(): number {
-    return 1;
-  }
-
-  async bar(): Promise<string> {
-    return 'bar';
-  }
-
-  /**
-   * @param foo foo to bar
-   */
-  fooBar(foo = 'foo'): string {
-    return `${foo}bar`;
-  }
-}
-```
-
 ## IDE Usage
 
 ### Usage VS Code
 
-Install the [oxc](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) extension for inline linting.
-
-Install the [oxfmt](https://marketplace.visualstudio.com/items?itemName=oxc.oxfmt-vscode) extension for formatting on save, then add to your `settings.json`:
+Install the [oxc](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) extension, then update `settings.json`:
 
 ```json
-"editor.defaultFormatter": "oxc.oxfmt-vscode",
-"editor.formatOnSave": true
+"editor.defaultFormatter": "oxc.oxc-vscode",
+"editor.formatOnSave": true,
 ```
 
 ### Usage with IntelliJ
@@ -56,7 +35,8 @@ IntelliJ has an Oxc plugin supporting oxfmt and oxlint: https://plugins.jetbrain
 1. Install `@linzjs/style`:
 
 ```bash
-npm install --save-dev @linzjs/style oxfmt oxlint oxlint-tsgolint
+# this also installs dependencies: madge oxfmt oxlint oxlint-tsgolint
+npm install --save-dev @linzjs/style
 ```
 
 2. Install the config files:
@@ -94,10 +74,25 @@ export default defineConfig({
 });
 ```
 
-3. Apply the formatting/linting to all source code
+3. Update `package.json` scripts
+
+Add/update lint-related commands in package.json:
+
+```json
+  scripts: {
+    "lint": "npx concurrently \"npm run lint:circular\" \"npm run lint:oxlint\" \"npm run lint:fmt\" \"tsc\"",
+    "lint:circular": "madge --circular --extensions js,ts,tsx --ts-config tsconfig.json ./src",
+    "lint:oxlint": "oxlint --deny-warnings",
+    "lint:fmt": "oxfmt --check .",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt --write ."
+  }
+```
+
+4. Apply the formatting/linting to all source code
 
 ```
-npx eslint .
+npm run lint .
 ```
 
 ## Migration from 3.x to 4.x

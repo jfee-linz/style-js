@@ -2,10 +2,8 @@
   // ESM tsconfig based off https://github.com/sindresorhus/tsconfig/blob/main/tsconfig.json
   "compilerOptions": {
     "allowJs": true,
-    "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "composite": true,
-    "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -18,21 +16,23 @@
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
-    "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "pretty": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    // "strictNullChecks": true,
+    "strictNullChecks": true,
     "stripInternal": true,
     "target": "ES2023",
-    "useDefineForClassFields": true
+
+    // no current way to exclude node_modules from these checks
+    // https://github.com/microsoft/TypeScript/issues/40426
+    // oxlint configured to check for unused
+    "noImplicitOverride": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   }
 }

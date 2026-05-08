@@ -9,26 +9,24 @@
   "files": [
     "build",
     "!build/**/__test__",
+    "!build/tsconfig.tsbuildinfo",
     "config",
     "linz-style-install.mjs",
-    "oxfmt.config.ts",
-    "oxlint.config.ts",
-    "oxlint.config-react.ts",
     "tsconfig.base.json"
   ],
   "type": "module",
   "exports": {
     "./oxfmt.config": {
       "types": "./build/oxfmt.config.d.ts",
-      "default": "./oxfmt.config.ts"
+      "default": "./build/oxfmt.config.js"
     },
     "./oxlint.config": {
       "types": "./build/oxlint.config.d.ts",
-      "default": "./oxlint.config.ts"
+      "default": "./build/oxlint.config.js"
     },
     "./oxlint.config-react": {
       "types": "./build/oxlint.config-react.d.ts",
-      "default": "./oxlint.config-react.ts"
+      "default": "./build/oxlint.config-react.js"
     },
     "./tsconfig.base.json": "./tsconfig.base.json"
   },
@@ -37,17 +35,22 @@
   },
   "scripts": {
     "build": "tsc",
-    "lint": "oxlint . && oxfmt --check .",
-    "format": "oxlint --fix . && oxfmt ."
+    "lint": "npx concurrently \"npm run lint:circular\" \"npm run lint:oxlint\" \"npm run lint:fmt\" \"tsc\"",
+    "lint:circular": "madge --circular --extensions js,ts,tsx --ts-config tsconfig.json ./src",
+    "lint:oxlint": "oxlint --deny-warnings",
+    "lint:fmt": "oxfmt --check .",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt --write ."
   },
   "dependencies": {
-    "oxfmt": "^0.47.0",
-    "oxlint": "^1.62.0",
-    "oxlint-tsgolint": "^0.22.1",
-    "typescript": "^5.5.2"
+    "madge": "^8.0.0",
+    "oxfmt": "^0.48.0",
+    "oxlint": "^1.63.0",
+    "oxlint-tsgolint": "^0.22.1"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
-    "@types/react": "^18.3.0"
+    "@types/react": "^18.3.0",
+    "typescript": "^5.5.2"
   }
 }
