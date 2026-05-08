@@ -1,5 +1,4 @@
 {
-  // ESM tsconfig based off https://github.com/sindresorhus/tsconfig/blob/main/tsconfig.json
   "compilerOptions": {
     "allowJs": true,
     "alwaysStrict": true,
@@ -30,7 +29,6 @@
 
     // no current way to exclude node_modules from these checks
     // https://github.com/microsoft/TypeScript/issues/40426
-    // oxlint configured to check for unused
     "noImplicitOverride": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false

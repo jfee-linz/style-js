@@ -12,19 +12,12 @@ export default defineConfig({
   },
   overrides: [
     {
-      files: ["**/*.mts", "**/*.ts", "**/*.tsx"],
-      jsPlugins: [
-        // requires npm install
-        // "eslint-plugin-react-hooks"
-      ],
-    },
-    {
       files: ["**/*.test.ts", "**/*.test.tsx", "**/*.stories.*"],
       plugins: ["vitest"],
       jsPlugins: [
         // requires npm install
         // 'eslint-plugin-testing-library',
-        // 'eslint-plugin-storybook'],
+        // 'eslint-plugin-storybook',
       ],
     },
   ],

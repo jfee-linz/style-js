@@ -13,12 +13,12 @@ export default defineConfig({
       plugins: ['react', 'react-perf'],
 
       rules: {
-        'react-hooks/rules-of-hooks': 'error',
         'react/display-name': 'error',
         'react/exhaustive-deps': 'warn',
         'react/hook-use-state': 'error',
         'react/jsx-key': 'error',
         'react/jsx-no-duplicate-props': 'error',
+        'react/only-export-components': 'error',
         'react/react-in-jsx-scope': 'off',
         'react/rules-of-hooks': 'error',
       },

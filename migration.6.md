@@ -67,9 +67,8 @@ Update lint-related commands in package.json:
   ```
 
 - compare previous overrides from eslint/prettier and ignored files are working properly
-  - make sure `.editorconfig` does not conflict
-
   - overrides in new configs `oxlint.config.ts` and `oxfmt.config.ts`
+    - make sure `.editorconfig` does not conflict
 
   - `.gitignore` is used to ignore generated files and must be _inside working directory_
     https://oxc.rs/docs/guide/usage/linter/ignore-files.html#ignore-files
