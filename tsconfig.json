@@ -1,7 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "build"
+    "outDir": "build",
+    "types": ["node"]
   },
-  "include": ["src"]
+  "include": ["oxfmt.config.ts", "oxlint.config.ts", "oxlint.config-react.ts", "src"]
 }

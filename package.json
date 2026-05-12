@@ -1,42 +1,57 @@
 {
   "name": "@linzjs/style",
-  "version": "5.4.0",
+  "version": "6.0.0",
   "license": "MIT",
   "repository": "github:linz/style-js",
   "bin": {
     "linz-style-install": "linz-style-install.mjs"
   },
-  "type": "module",
   "files": [
     "build",
+    "!build/**/__test__",
+    "!build/tsconfig.tsbuildinfo",
     "config",
     "linz-style-install.mjs",
-    ".eslintrc.cjs",
-    ".prettierrc.cjs",
-    "tsconfig.json",
     "tsconfig.base.json"
   ],
-  "scripts": {
-    "build": "tsc",
-    "lint": "npx eslint . --ignore-path .gitignore"
-  },
-  "devDependencies": {
-    "@types/node": "^20.4.9",
-    "@types/react": "^18.2.20"
-  },
-  "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.13.1",
-    "@typescript-eslint/parser": "^7.13.1",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-react": "^7.34.3",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-simple-import-sort": "^12.1.0",
-    "prettier": "^3.3.2",
-    "typescript": "^5.5.2"
+  "type": "module",
+  "exports": {
+    "./oxfmt.config": {
+      "types": "./build/oxfmt.config.d.ts",
+      "default": "./build/oxfmt.config.js"
+    },
+    "./oxlint.config": {
+      "types": "./build/oxlint.config.d.ts",
+      "default": "./build/oxlint.config.js"
+    },
+    "./oxlint.config-react": {
+      "types": "./build/oxlint.config-react.d.ts",
+      "default": "./build/oxlint.config-react.js"
+    },
+    "./tsconfig.base.json": "./tsconfig.base.json"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "npx concurrently \"npm run lint:circular\" \"npm run lint:oxlint\" \"npm run lint:fmt\" \"tsc\"",
+    "lint:circular": "madge --circular --extensions js,ts,tsx --ts-config tsconfig.json ./src",
+    "lint:oxlint": "oxlint --deny-warnings",
+    "lint:fmt": "oxfmt --check .",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt --write .",
+    "test": "echo linting is the test for this project"
+  },
+  "dependencies": {
+    "madge": "^8.0.0",
+    "oxfmt": "^0.48.0",
+    "oxlint": "^1.63.0",
+    "oxlint-tsgolint": "^0.22.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@types/react": "^18.3.0",
+    "typescript": "^5.5.2"
   }
 }

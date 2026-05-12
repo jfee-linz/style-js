@@ -3,8 +3,8 @@ import * as path from 'node:path';
 
 /** List of files to automatically install */
 const InstallFiles = [
-  { source: 'eslintrc.cjs', target: '.eslintrc.cjs' },
-  { source: 'prettierrc.cjs', target: '.prettierrc.cjs' },
+  { source: 'oxfmt.config.ts', target: 'oxfmt.config.ts' },
+  { source: 'oxlint.config.ts', target: 'oxlint.config.ts' },
   { source: 'tsconfig.json', target: 'tsconfig.json' },
 ];
 
