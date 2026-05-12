@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bootstrap-sha": "437f754e17eca905a880606219c832e8fc9d5f9c",
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "@linzjs/style",
+      "include-v-in-tag": true
+    }
+  }
+}
