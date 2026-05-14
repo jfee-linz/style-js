@@ -1,20 +1,16 @@
-name: Release Please
-
 on:
   push:
     branches:
       - master
 
-permissions:
-  contents: write
-  pull-requests: write
+name: release-please
 
 jobs:
   release-please:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: write
+      pull-requests: write
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
@@ -22,42 +18,31 @@ jobs:
       - uses: googleapis/release-please-action@v5
         id: release
         with:
+          release-type: node
           token: ${{ secrets.LINZ_GITHUB_AUTOMATION }}
-          config-file: .github/release-please-config.json
-          manifest-file: .github/.release-please-manifest.json
 
-  # Separate job to publish to NPM when a release is created
-  publish:
-    runs-on: ubuntu-latest
+  publish-release:
     permissions:
-      id-token: write # Required for OIDC
       contents: read
-    needs: release-please
+      id-token: write # Required for OIDC
     environment:
       name: prod
+    needs: release-please
+    runs-on: ubuntu-latest
     if: ${{ needs.release-please.outputs.release_created }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-
-      - name: Set up Node.js
-        uses: linz/action-setup-node@623b1541d0e2f665d5378ad2e475e3c7335ba944 # v1.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@linzjs'
+          fetch-depth: 0
 
-      - name: Install dependencies
-        run: npm ci
+      - uses: linz/action-setup-node@d492fdef8b09cc595b9e28408344de3f70076591 # v1.0.4
+        with:
+          node-version-file: .node-version
 
-      - name: Build package
-        run: npm run build
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Test
-        run: npm run test
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint
+      - run: npm run test
 
       - name: Publish to NPM
         run: npm publish
