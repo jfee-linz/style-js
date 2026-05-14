@@ -12,13 +12,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@064fe7f3312418007dea2b49a19844a9ee378f49 # v6.0.2
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v6
+      - uses: linz/action-setup-node@d492fdef8b09cc595b9e28408344de3f70076591 # v1.0.4
         with:
           node-version-file: .node-version
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@linzjs'
 
       - run: npm ci
       - run: npm run build
