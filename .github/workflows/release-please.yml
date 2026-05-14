@@ -4,18 +4,16 @@ on:
       - master
 
 name: release-please
-
 jobs:
   release-please:
-    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
+    runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
-      - uses: googleapis/release-please-action@v5
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
         id: release
         with:
           release-type: node
@@ -24,14 +22,16 @@ jobs:
   publish-release:
     permissions:
       contents: read
-      id-token: write # Required for OIDC
+      id-token: write
+
     environment:
       name: prod
+
     needs: release-please
     runs-on: ubuntu-latest
     if: ${{ needs.release-please.outputs.release_created }}
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@064fe7f3312418007dea2b49a19844a9ee378f49 # v6.0.2
         with:
           fetch-depth: 0
 
